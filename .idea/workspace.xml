@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="207d73e1-a719-44dd-8065-4e6d1b4b4915" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/readLerc_node_modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/readLerc.iml" afterPath="$PROJECT_DIR$/.idea/readLerc.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/LercCodecV2.js" afterPath="$PROJECT_DIR$/lib/LercCodecV2.js" />
     </list>
     <ignored path="readLerc.iws" />
@@ -53,8 +48,8 @@
       <file leaf-file-name="LercCodecV2.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/LercCodecV2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="673">
-              <caret line="263" column="4" selection-start-line="263" selection-start-column="4" selection-end-line="263" selection-end-column="4" />
+            <state relative-caret-position="10836">
+              <caret line="602" column="27" selection-start-line="602" selection-start-column="27" selection-end-line="602" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -193,12 +188,12 @@
       <option name="presentableId" value="Default" />
       <updated>1471228442998</updated>
       <workItem from="1471228445666" duration="23273000" />
-      <workItem from="1471309587363" duration="6531000" />
+      <workItem from="1471309587363" duration="16855000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29804000" />
+    <option name="totallyTimeSpent" value="40128000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -296,8 +291,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/LercCodecV2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="673">
-          <caret line="263" column="4" selection-start-line="263" selection-start-column="4" selection-end-line="263" selection-end-column="4" />
+        <state relative-caret-position="10836">
+          <caret line="602" column="27" selection-start-line="602" selection-start-column="27" selection-end-line="602" selection-end-column="27" />
           <folding />
         </state>
       </provider>
