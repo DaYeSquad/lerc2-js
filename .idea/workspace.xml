@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="207d73e1-a719-44dd-8065-4e6d1b4b4915" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/LercCodecV2.js" afterPath="$PROJECT_DIR$/lib/LercCodecV2.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/LercRaster.js" afterPath="$PROJECT_DIR$/lib/LercRaster.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/read.js" afterPath="$PROJECT_DIR$/read.js" />
     </list>
     <ignored path="readLerc.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,19 +30,11 @@
       <file leaf-file-name="read.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/read.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="30" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LercRaster.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/LercRaster.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="21" column="44" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="44" />
-              <folding />
+            <state relative-caret-position="540">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,9 +42,11 @@
       <file leaf-file-name="LercCodecV2.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/LercCodecV2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10836">
-              <caret line="602" column="27" selection-start-line="602" selection-start-column="27" selection-end-line="602" selection-end-column="27" />
-              <folding />
+            <state relative-caret-position="223">
+              <caret line="349" column="21" selection-start-line="349" selection-start-column="21" selection-end-line="349" selection-end-column="21" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -63,6 +59,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/lib/LercRaster.js" />
         <option value="$PROJECT_DIR$/read.js" />
         <option value="$PROJECT_DIR$/lib/LercCodecV2.js" />
       </list>
@@ -77,8 +74,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="x" value="16" />
+    <option name="y" value="23" />
+    <option name="width" value="1260" />
+    <option name="height" value="737" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -120,7 +119,6 @@
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="FullScreen" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -188,15 +186,15 @@
       <option name="presentableId" value="Default" />
       <updated>1471228442998</updated>
       <workItem from="1471228445666" duration="23273000" />
-      <workItem from="1471309587363" duration="16855000" />
+      <workItem from="1471309587363" duration="23934000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40128000" />
+    <option name="totallyTimeSpent" value="47207000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="16" y="23" width="1260" height="737" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -238,7 +236,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="30" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -246,7 +246,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="21" column="44" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="44" />
-          <folding />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -254,7 +256,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -262,6 +266,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
           <caret line="271" column="6" selection-start-line="271" selection-start-column="6" selection-end-line="271" selection-end-column="6" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#8908#9685#0" expanded="false" />
+            <element signature="e#9733#10163#0" expanded="false" />
+            <element signature="e#16514#17515#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -275,25 +285,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/LercRaster.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="44" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="44" />
-          <folding />
+        <state relative-caret-position="270">
+          <caret line="38" column="46" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="46" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/read.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="30" />
-          <folding />
+        <state relative-caret-position="540">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/LercCodecV2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10836">
-          <caret line="602" column="27" selection-start-line="602" selection-start-column="27" selection-end-line="602" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="223">
+          <caret line="349" column="21" selection-start-line="349" selection-start-column="21" selection-end-line="349" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
