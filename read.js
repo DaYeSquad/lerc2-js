@@ -29,4 +29,9 @@ var arrayBuffer = new Uint8Array(lercData).buffer;
 var lerc = LERC();
 var result = lerc.decode(arrayBuffer);
 
+var dv = new DataView(result.pixelData);
+for (var i = 0; i < 100; i++) {
+  console.log(dv.getFloat32(i * 4, true));
+}
+
 console.log("DONE!");
