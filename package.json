@@ -2,10 +2,13 @@
   "name": "readlerc",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "read.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Frank",
+  "license": "MIT",
+  "dependencies": {
+    "mathjs": "^3.4.1"
+  }
 }
