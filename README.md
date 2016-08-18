@@ -10,16 +10,5 @@ The original project just provides Lerc2 encoder and Lerc1 decoder(js), so I mig
 
 ## How to use
 
-I test it under node environment (version is v0.10.28) and run 'node read' to test.
-
-```Javascript
-var LERC = require("./lib/LercCodecV2.js").Lerc;
-var fs = require("fs");
-
-var lercData = fs.readFileSync("./test.lerc");
-var arrayBuffer = new Uint8Array(lercData).buffer;
-
-var lerc = LERC();
-var result = lerc.decode(arrayBuffer);
-... do something with result.pixelData...
-```
+1.run `grunt` to compile the project.
+2.run `node read` to print the result.
