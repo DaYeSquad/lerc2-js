@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Lerc2Decoder} from './lib/lercdecoder2-compiled';
+var Lerc2Decoder = require('./lib/dist/lercdecoder2').Lerc2Decoder;
 
 var fs = require("fs");
 
