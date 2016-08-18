@@ -10,5 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "mathjs": "^3.4.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.13.2"
   }
 }

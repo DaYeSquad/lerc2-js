@@ -20,14 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-var LERC = require("./lib/LercCodecV2.js").Lerc;
+import {Lerc2Decoder} from './lib/lercdecoder2-compiled';
+
 var fs = require("fs");
 
 var lercData = fs.readFileSync("./test.lerc");
 var arrayBuffer = new Uint8Array(lercData).buffer;
 
-var lerc = LERC();
-var result = lerc.decode(arrayBuffer);
+var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
+var result = lerc2Decoder.parse();
 
 var dv = new DataView(result.pixelData);
 for (var i = 0; i < 100; i++) {
