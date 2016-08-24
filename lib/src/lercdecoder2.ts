@@ -59,16 +59,16 @@ export interface Lerc2ParseResult {
 
 export class Lerc2Decoder {
   private static FILE_KEY_ = "Lerc2 ";
-  private buffer_: Uint8Array = undefined;
+  private buffer_: ArrayBuffer = undefined;
   private bufferDataView_: DataView = undefined;
   private fp_: number = 0;
   private headerInfo_: Lerc2HeaderInfo = <Lerc2HeaderInfo>{};
   private bitStuff2Util_: BitStuff2 = undefined;
   private pixelValuesDataView_: DataView = undefined;
 
-  constructor(buffer: Uint8Array) {
+  constructor(buffer: ArrayBuffer) {
     this.buffer_ = buffer;
-    this.bitStuff2Util_ = new BitStuff2(buffer);
+    this.bitStuff2Util_ = new BitStuff2(new Uint8Array(buffer));
     this.bufferDataView_ = new DataView(this.buffer_);
   }
 

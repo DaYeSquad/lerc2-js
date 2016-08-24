@@ -25,16 +25,56 @@ var Lerc2Decoder = require('../lib/src/lercdecoder2').Lerc2Decoder;
 var fs = require("fs");
 
 describe("testLerc2IntValues()", function() {
-  it("pixel values should equal to values in data/test_int_tiff.json", function() {
+  it("pixel values should equal to values in data/test_int.json", function() {
     var lercData = fs.readFileSync("data/test_int.lerc");
     var arrayBuffer = new Uint8Array(lercData).buffer;
     var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
     var result = lerc2Decoder.parse();
-    var obj = JSON.parse(fs.readFileSync("data/test_int_tiff.json"));
+    var obj = JSON.parse(fs.readFileSync("data/test_int.json"));
     var testIntValues = obj["values"];
     var numNotEqual = 0;
     var dv = new DataView(result.pixelData);
-    for (var i = 0; i < 256 * 256; i++) {
+    for (var i = 0; i < result.pixelData.length; i++) {
+      var value = dv.getInt32(i * 4, true);
+      if (value != testIntValues[i]) {
+        numNotEqual++;
+      }
+    }
+    expect(numNotEqual).to.equal(0);
+  });
+});
+
+describe("testLerc2ConstImageValues()", function() {
+  it("pixel values should equal to values in data/test_int.json", function() {
+    var lercData = fs.readFileSync("data/test_const_image.lerc");
+    var arrayBuffer = new Uint8Array(lercData).buffer;
+    var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
+    var result = lerc2Decoder.parse();
+    var obj = JSON.parse(fs.readFileSync("data/test_const_image.json"));
+    var testIntValues = obj["values"];
+    var numNotEqual = 0;
+    var dv = new DataView(result.pixelData);
+    for (var i = 0; i < result.pixelData.length; i++) {
+      var value = dv.getInt32(i * 4, true);
+      if (value != testIntValues[i]) {
+        numNotEqual++;
+      }
+    }
+    expect(numNotEqual).to.equal(0);
+  });
+});
+
+describe("testLerc2ConstImageValues()", function() {
+  it("pixel values should equal to values in data/test_float.json", function() {
+    var lercData = fs.readFileSync("data/test_float.lerc");
+    var arrayBuffer = new Uint8Array(lercData).buffer;
+    var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
+    var result = lerc2Decoder.parse();
+    var obj = JSON.parse(fs.readFileSync("data/test_float.json"));
+    var testIntValues = obj["values"];
+    var numNotEqual = 0;
+    var dv = new DataView(result.pixelData);
+    for (var i = 0; i < result.pixelData.length; i++) {
       var value = dv.getInt32(i * 4, true);
       if (value != testIntValues[i]) {
         numNotEqual++;
