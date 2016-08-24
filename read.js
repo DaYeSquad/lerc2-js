@@ -24,15 +24,27 @@ var Lerc2Decoder = require('./lib/src/lercdecoder2').Lerc2Decoder;
 
 var fs = require("fs");
 
-var lercData = fs.readFileSync("./test.lerc");
+// var lercData = fs.readFileSync("./test.lerc2");
+// var lercData = fs.readFileSync("/Users/FrankLin/Downloads/lerc2_test_dist/4/13/5.lerc");
+var lercData = fs.readFileSync("/Users/FrankLin/Downloads/lerc2_test_dist/3/6/3.lerc");
 var arrayBuffer = new Uint8Array(lercData).buffer;
 
 var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
 var result = lerc2Decoder.parse();
 
+// the test lerc is 256 * 256
+var obj = JSON.parse(fs.readFileSync("data/test_int_tiff.json"));
+var testIntValues = obj["values"];
+
+var numNotEqual = 0;
 var dv = new DataView(result.pixelData);
-for (var i = 0; i < 100; i++) {
-  console.log(dv.getFloat32(i * 4, true));
+for (var i = 0; i < 256 * 256; i++) {
+  var value = dv.getInt32(i * 4, true);
+  if (value != testIntValues[i]) {
+    //console.log("index " + i + " is " + value);
+    numNotEqual++;
+  }
 }
+console.log("num not equal is " + numNotEqual);
 
 console.log("DONE!");
