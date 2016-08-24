@@ -41,7 +41,7 @@ var dv = new DataView(result.pixelData);
 for (var i = 0; i < 256 * 256; i++) {
   var value = dv.getInt32(i * 4, true);
   if (value != testIntValues[i]) {
-    // console.log("index " + i + " is " + value);
+    console.log("index " + i + " is " + value);
     numNotEqual++;
   }
 }

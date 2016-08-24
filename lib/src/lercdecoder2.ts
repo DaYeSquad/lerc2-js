@@ -100,7 +100,7 @@ export class Lerc2Decoder {
         let k = i * this.headerInfo_.width;
         for (let j = 0; j < this.headerInfo_.width; j++) {
           //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
-          this.setPixelValuesByHeaderInfoDataType_(k, z0, "set const image");
+          this.setPixelValuesByHeaderInfoDataType_(k, z0);
         }
       }
       return { pixelData: this.pixelValuesDataView_.buffer };
@@ -361,7 +361,7 @@ export class Lerc2Decoder {
         let k: number = i * this.headerInfo_.width + j0;
         for (let j = j0; j < j1; j++, k++)
           //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
-          this.setPixelValuesByHeaderInfoDataType_(k, 0, "compareFlag2");
+          this.setPixelValuesByHeaderInfoDataType_(k, 0);
       }
       this.fp_ = ptr;
       return;
@@ -372,10 +372,10 @@ export class Lerc2Decoder {
         for (let j = j0; j < j1; j++, k++) {
           //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
           if (this.headerInfo_.lercDataType === Lerc2DataType.FLOAT) {
-            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getFloat32(srcPtr, true), "compareFlag0_FLOAT");
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getFloat32(srcPtr, true));
             srcPtr += 4;
           } else if (this.headerInfo_.lercDataType === Lerc2DataType.INT) {
-            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true), "compareFlag0_INT");
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true));
             srcPtr += 4;
           } else {
             throw "Lerc2DataType rather than FLOAT, INT is not supported yet";
@@ -396,7 +396,7 @@ export class Lerc2Decoder {
           let k: number = i * this.headerInfo_.width + j0;
           for (let j = j0; j < j1; j++, k++) {
             //TODO(lin.xiaoe.f@gmail.com): if (bitMask.IsValid(k))
-            this.setPixelValuesByHeaderInfoDataType_(k, offset, "compareFlag3");
+            this.setPixelValuesByHeaderInfoDataType_(k, offset);
           }
         }
       } else {
@@ -416,7 +416,7 @@ export class Lerc2Decoder {
             for (let j = j0; j < j1; j++, k++) {
               let z: number = offset + bufferArrayDv.getUint32(srcPos, true) * invScale;
               srcPos += 4;
-              this.setPixelValuesByHeaderInfoDataType_(k, <number>(math.min(z, this.headerInfo_.zMax)), "all valid");
+              this.setPixelValuesByHeaderInfoDataType_(k, <number>(math.min(z, this.headerInfo_.zMax)));
             }
           }
         } else { // not all valid
@@ -426,7 +426,7 @@ export class Lerc2Decoder {
               //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
               let z: number = offset + bufferArray[srcPos] * invScale;
               srcPos++;
-              this.setPixelValuesByHeaderInfoDataType_(k, math.min(z, this.headerInfo_.zMax), "compareFlag other, not all valid");
+              this.setPixelValuesByHeaderInfoDataType_(k, math.min(z, this.headerInfo_.zMax));
             }
           }
         }
@@ -521,7 +521,7 @@ export class Lerc2Decoder {
         switch (this.headerInfo_.lercDataType) {
           case Lerc2DataType.BYTE: {
             sizeofType = 1;
-            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint8(srcPtr), "readDataOneSweep_");
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint8(srcPtr));
             srcPtr += 1;
             cntPixel++;
             break;
@@ -529,14 +529,14 @@ export class Lerc2Decoder {
           case Lerc2DataType.INT: {
             console.log(`Lerc2DataType.INT ${srcPtr}`);
             sizeofType = 4;
-            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true), "readDataOneSweep_");
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true));
             srcPtr += 4;
             cntPixel++;
             break;
           }
           case Lerc2DataType.FLOAT: {
             sizeofType = 4;
-            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getFloat32(srcPtr, true), "readDataOneSweep_");
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getFloat32(srcPtr, true));
             srcPtr += 4;
             cntPixel++;
             break;
@@ -586,21 +586,6 @@ export class Lerc2Decoder {
     if (position === 27937) {
       console.log(`27937 value is ${value}`);
     }
-    this.setPixelValues_(position, value, this.headerInfo_.lercDataType);
-  }
-
-  setPixelValuesByHeaderInfoDataType_(position: number, value: number, flag: string): void {
-    //DEBUG
-    // if (position === 276) {
-    //   console.log(`277 value flag is ${flag}`);
-    // }
-    // if (position === 278) {
-    //   console.log(`278 value flag is ${flag}`);
-    // }
-
-    //DEBUG
-    //console.log(`k ${position} value is ${value} => flag is ${flag}`);
-
     this.setPixelValues_(position, value, this.headerInfo_.lercDataType);
   }
 
