@@ -10,5 +10,8 @@ The original project just provides Lerc2 encoder and Lerc1 decoder(js), so I mig
 
 ## How to use
 
-1.run `grunt` to compile the project.
-2.run `node read` to print the result.
+1.Copy code from lib/dist folder.
+
+## Test
+
+Run mocha to test.

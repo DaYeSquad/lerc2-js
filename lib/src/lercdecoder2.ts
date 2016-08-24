@@ -75,7 +75,6 @@ export class Lerc2Decoder {
   parse(): Lerc2ParseResult {
     // parse header and set lerc2 version to bitStuff2
     this.readHeader_();
-    console.log("Lerc2 data type is " + Lerc2Decoder.nameFromDataType_(this.headerInfo_.lercDataType));
     this.bitStuff2Util_.setLerc2Version(this.headerInfo_.version);
 
     // You can safely skip this step.
@@ -235,7 +234,6 @@ export class Lerc2Decoder {
       do {
         sum1 += (this.buffer_[iByte++] << 8);
         sum2 += sum1 += this.buffer_[iByte++];
-        console.log(sum2);
       } while (--tlen);
 
       sum1 = (sum1 & 0xffff) + (sum1 >> 16);
@@ -250,7 +248,6 @@ export class Lerc2Decoder {
     // second reduction step to reduce sums to 16 bits
     sum1 = (sum1 & 0xffff) + (sum1 >> 16);
     sum2 = (sum2 & 0xffff) + (sum2 >> 16);
-    console.log("Sum1 is " + sum1 + " ,sum2 is " + sum2);
 
     // sum2 << 16 | sum1 is greater than INT_MAX use math.js instead.
     var result = math.leftShift(math.bignumber(sum2), 16);
@@ -277,10 +274,8 @@ export class Lerc2Decoder {
 
     if (numValid == 0) {
       //TODO(lin.xiaoe.f@gmail.com): Bit Mask is all invalid.
-      console.log("All pixels are invalid");
     } else if (numValid === width * height) {
       //TODO(lin.xiaoe.f@gmail.com): Bit Mask is all valid.
-      console.log("All pixels are valid");
     } else if (numBytesMask > 0) {
       //TODO(lin.xiaoe.f@gmail.com): RLE decompress.
       console.log("Need RLE decompress");
@@ -338,15 +333,6 @@ export class Lerc2Decoder {
     let compareFlag: number = this.buffer_[ptr];
     ptr++;
     let numPixel: number = 0;
-
-    //TODO(lin.xiaoe.f@gmail.com): DEBUG code
-    // if (i0 === 104 && i1 === 112 && j0 === 32 && j1 === 40) {
-    //   console.log(`CompareFlag is ${compareFlag}`);
-    // }
-    // if (i0 === 104 && i1 === 112 && j0 === 32 && j1 === 48) {
-    //   console.log(`CompareFlag is ${compareFlag}`);
-    // }
-    //console.log(`i0 ${i0} i1 ${i1} j0 ${j0} j1 ${j1} comprFlag is ${compareFlag}`);
 
     let bits67: number = compareFlag >> 6;
     let testCode: number = (compareFlag >> 2) & 15; // use bits 2345 for integrity check
@@ -433,7 +419,6 @@ export class Lerc2Decoder {
       }
     }
     this.fp_ = ptr;
-    console.log(`this.fp_ is ${this.fp_}`);
   }
 
   /**
@@ -527,7 +512,6 @@ export class Lerc2Decoder {
             break;
           }
           case Lerc2DataType.INT: {
-            console.log(`Lerc2DataType.INT ${srcPtr}`);
             sizeofType = 4;
             this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true));
             srcPtr += 4;
@@ -583,9 +567,6 @@ export class Lerc2Decoder {
    * @private
    */
   setPixelValuesByHeaderInfoDataType_(position: number, value: number): void {
-    if (position === 27937) {
-      console.log(`27937 value is ${value}`);
-    }
     this.setPixelValues_(position, value, this.headerInfo_.lercDataType);
   }
 

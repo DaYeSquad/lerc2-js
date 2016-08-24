@@ -1,4 +1,4 @@
-// read.js
+// test.js
 //
 // Copyright (c) 2016 Frank Lin (lin.xiaoe.f@gmail.com)
 //
@@ -20,31 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-var Lerc2Decoder = require('./lib/src/lercdecoder2').Lerc2Decoder;
-
+var expect = require("chai").expect;
+var Lerc2Decoder = require('../lib/src/lercdecoder2').Lerc2Decoder;
 var fs = require("fs");
 
-// var lercData = fs.readFileSync("./test.lerc2");
-// var lercData = fs.readFileSync("/Users/FrankLin/Downloads/lerc2_test_dist/4/13/5.lerc");
-var lercData = fs.readFileSync("/Users/FrankLin/Downloads/lerc2_test_dist/3/6/3.lerc");
-var arrayBuffer = new Uint8Array(lercData).buffer;
-
-var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
-var result = lerc2Decoder.parse();
-
-// the test lerc is 256 * 256
-var obj = JSON.parse(fs.readFileSync("data/test_int_tiff.json"));
-var testIntValues = obj["values"];
-
-var numNotEqual = 0;
-var dv = new DataView(result.pixelData);
-for (var i = 0; i < 256 * 256; i++) {
-  var value = dv.getInt32(i * 4, true);
-  if (value != testIntValues[i]) {
-    console.log("index " + i + " is " + value);
-    numNotEqual++;
-  }
-}
-console.log("num not equal is " + numNotEqual);
-
-console.log("DONE!");
+describe("testLerc2IntValues()", function() {
+  it("pixel values should equal to values in data/test_int_tiff.json", function() {
+    var lercData = fs.readFileSync("data/test_int.lerc");
+    var arrayBuffer = new Uint8Array(lercData).buffer;
+    var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
+    var result = lerc2Decoder.parse();
+    var obj = JSON.parse(fs.readFileSync("data/test_int_tiff.json"));
+    var testIntValues = obj["values"];
+    var numNotEqual = 0;
+    var dv = new DataView(result.pixelData);
+    for (var i = 0; i < 256 * 256; i++) {
+      var value = dv.getInt32(i * 4, true);
+      if (value != testIntValues[i]) {
+        numNotEqual++;
+      }
+    }
+    expect(numNotEqual).to.equal(0);
+  });
+});
