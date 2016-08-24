@@ -58,7 +58,6 @@ export interface Lerc2ParseResult {
 }
 
 export class Lerc2Decoder {
-
   private static FILE_KEY_ = "Lerc2 ";
   private buffer_: Uint8Array = undefined;
   private bufferDataView_: DataView = undefined;
@@ -257,8 +256,6 @@ export class Lerc2Decoder {
     var result = math.leftShift(math.bignumber(sum2), 16);
     result = math.bitXor(result, sum1); // result = math.bitOr(result, sum1);
 
-    console.log("Bignumber result is " + result);
-
     return result;
   }
 
@@ -339,8 +336,8 @@ export class Lerc2Decoder {
   readTile_(i0: number, i1: number, j0: number, j1: number): void {
     let ptr: number = this.fp_;
     let compareFlag: number = this.buffer_[ptr];
-    let numPixel: number = 0;
     ptr++;
+    let numPixel: number = 0;
 
     //TODO(lin.xiaoe.f@gmail.com): DEBUG code
     // if (i0 === 104 && i1 === 112 && j0 === 32 && j1 === 40) {
@@ -361,15 +358,16 @@ export class Lerc2Decoder {
 
     if (compareFlag === 2) { // entire tile is constant 0 (if valid or invalid doesn't matter)
       for (let i = i0; i < i1; i++) {
-        let k = i * this.headerInfo_.width + j0;
+        let k: number = i * this.headerInfo_.width + j0;
         for (let j = j0; j < j1; j++, k++)
           //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
-          this.pixelValuesDataView_.setInt32(k * 4, 0, true);
+          this.setPixelValuesByHeaderInfoDataType_(k, 0, "compareFlag2");
       }
       this.fp_ = ptr;
+      return;
     } else if (compareFlag === 0) { // read z's binary uncompressed
+      let srcPtr: number = ptr;
       for (let i = i0; i < i1; i++) {
-        let srcPtr: number = ptr;
         let k: number = i * this.headerInfo_.width + j0;
         for (let j = j0; j < j1; j++, k++) {
           //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
@@ -395,7 +393,7 @@ export class Lerc2Decoder {
 
       if (compareFlag === 3) {
         for (let i = i0; i < i1; i++) {
-          let k = i * this.headerInfo_.width + j0;
+          let k: number = i * this.headerInfo_.width + j0;
           for (let j = j0; j < j1; j++, k++) {
             //TODO(lin.xiaoe.f@gmail.com): if (bitMask.IsValid(k))
             this.setPixelValuesByHeaderInfoDataType_(k, offset, "compareFlag3");
@@ -412,11 +410,6 @@ export class Lerc2Decoder {
         let invScale: number = 2 * this.headerInfo_.maxZError;
         let srcPos: number = 0;
 
-        // DEBUG
-        // for (let i = 0; i < bufferArray.length; i++) {
-        //   console.log(`bufary is ${bufferArray[i]}`);
-        // }
-
         if (bufferArray.length == (i1 - i0) * (j1 - j0)) { // all valid
           for (let i = i0; i < i1; i++) {
             let k: number = i * this.headerInfo_.width + j0;
@@ -431,7 +424,7 @@ export class Lerc2Decoder {
             let k: number = i * this.headerInfo_.width + j0;
             for (let j = j0; j < j1; j++, k++) {
               //TODO(lin.xiaoe.f@gmail.com): if (m_bitMask.IsValid(k))
-              let z = offset + bufferArray[srcPos] * invScale;
+              let z: number = offset + bufferArray[srcPos] * invScale;
               srcPos++;
               this.setPixelValuesByHeaderInfoDataType_(k, math.min(z, this.headerInfo_.zMax), "compareFlag other, not all valid");
             }
@@ -440,6 +433,7 @@ export class Lerc2Decoder {
       }
     }
     this.fp_ = ptr;
+    console.log(`this.fp_ is ${this.fp_}`);
   }
 
   /**
@@ -588,17 +582,25 @@ export class Lerc2Decoder {
    * @param value Value to set.
    * @private
    */
-  // setPixelValuesByHeaderInfoDataType_(position: number, value: number): void {
-  //   if (position === 27937) {
-  //     console.log(`27937 value is ${value}`);
-  //   }
-  //   this.setPixelValues_(position, value, this.headerInfo_.lercDataType);
-  // }
+  setPixelValuesByHeaderInfoDataType_(position: number, value: number): void {
+    if (position === 27937) {
+      console.log(`27937 value is ${value}`);
+    }
+    this.setPixelValues_(position, value, this.headerInfo_.lercDataType);
+  }
 
   setPixelValuesByHeaderInfoDataType_(position: number, value: number, flag: string): void {
-    if (position === 278) {
-      console.log(`!!!-- 278 value is ${flag}`);
-    }
+    //DEBUG
+    // if (position === 276) {
+    //   console.log(`277 value flag is ${flag}`);
+    // }
+    // if (position === 278) {
+    //   console.log(`278 value flag is ${flag}`);
+    // }
+
+    //DEBUG
+    //console.log(`k ${position} value is ${value} => flag is ${flag}`);
+
     this.setPixelValues_(position, value, this.headerInfo_.lercDataType);
   }
 
@@ -622,6 +624,12 @@ export class Lerc2Decoder {
     }
   }
 
+  /**
+   * Get human readable name from given type.
+   * @param dataType Lerc2 data type in header.
+   * @returns {string} Name of type.
+   * @private
+   */
   static nameFromDataType_(dataType: Lerc2DataType): string {
     switch (dataType) {
       case Lerc2DataType.FLOAT: return "FLOAT";

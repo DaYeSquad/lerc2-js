@@ -55,7 +55,7 @@ export class BitStuff2 {
     this.fp_++;
 
     var bits67: number = numBitsByte >>> 6;
-    var n: number = (bits67 == 0) ? 4 : 3 - bits67;
+    var n: number = (bits67 === 0) ? 4 : 3 - bits67;
 
     var doLut: boolean = (numBitsByte & (1 << 5)) ? true : false;    // bit 5
     numBitsByte &= 31;    // bits 0-4;
