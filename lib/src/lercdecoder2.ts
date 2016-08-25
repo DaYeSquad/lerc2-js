@@ -72,19 +72,20 @@ export class Lerc2Decoder {
     this.bufferDataView_ = new DataView(this.buffer_);
   }
 
-  parse(): Lerc2ParseResult {
+  parse(skipChecksum: boolean=true): Lerc2ParseResult {
     // parse header and set lerc2 version to bitStuff2
     this.readHeader_();
     this.bitStuff2Util_.setLerc2Version(this.headerInfo_.version);
 
     // You can safely skip this step.
-    if (!this.isChecksumMatch_())
-      throw "Checksum is not matched";
+    if (!skipChecksum) {
+      if (!this.isChecksumMatch_())
+        throw "Checksum is not matched";
+    }
 
-    //TODO(lin.xiaoe.f@gmail.com): Assumes the data type is float or int.
-    this.pixelValuesDataView_ = new DataView(new Uint8Array(this.headerInfo_.height * this.headerInfo_.width * 4).buffer);
+    this.pixelValuesDataView_ = new DataView(new Uint8Array(this.headerInfo_.height * this.headerInfo_.width * this.sizeofHeaderInfoDataType_()).buffer);
     for (let i = 0; i < this.headerInfo_.width * this.headerInfo_.height; i++) {
-      this.pixelValuesDataView_.setInt32(i * 4, 0, true);
+      this.setPixelValuesByHeaderInfoDataType_(i, 0);
     }
 
     if (this.headerInfo_.numValidPixel === 0)
@@ -292,7 +293,7 @@ export class Lerc2Decoder {
       (this.headerInfo_.lercDataType === Lerc2DataType.BYTE || this.headerInfo_.lercDataType === Lerc2DataType.CHAR) &&
       this.headerInfo_.maxZError === 0.5) {
       //TODO(lin.xiaoe.f@gmail.com): Try Huffman.
-      throw "Try Huffman is not implemented yet";
+      //console.log("Try Huffman is not implemented yet");
     }
 
     var mbSize = this.headerInfo_.microBlockSize;
