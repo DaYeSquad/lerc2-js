@@ -106,7 +106,7 @@ export class Lerc2Decoder {
       return { pixelData: this.pixelValuesDataView_.buffer };
     }
 
-    var readDataOneSweepFlag = this.buffer_[this.fp_]; // read flag
+    var readDataOneSweepFlag = this.bufferDataView_.getUint8(this.fp_); // read flag
     this.fp_++;
 
     if (readDataOneSweepFlag === 0) { // no binary data in one sweep
@@ -174,20 +174,20 @@ export class Lerc2Decoder {
    * @returns {number} Result.
    */
   computeChecksumFletcher32_(len: number): BigNumber {
-    var lercBlobLen = len;
+    let lercBlobLen: number = len;
 
-    var sum1 = math.bignumber(0xffff);
-    var sum2 = math.bignumber(0xffff);
-    var words = parseInt(<any>(lercBlobLen / 2)); // fake the typescript compiler
+    let sum1: BigNumber = math.bignumber(0xffff);
+    let sum2: BigNumber = math.bignumber(0xffff);
+    let words: number = parseInt(<any>(lercBlobLen / 2)); // fake the typescript compiler
 
-    var iByte = Lerc2Decoder.FILE_KEY_.length + 8; // start right after the checksum entry
+    let iByte: number = Lerc2Decoder.FILE_KEY_.length + 8; // start right after the checksum entry
 
     while (words) {
-      var tlen = (words >= 359) ? 359 : words;
+      let tlen: number = (words >= 359) ? 359 : words;
       words -= tlen;
       do {
-        sum1 = math.sum(sum1, this.buffer_[iByte++] << 8);
-        sum1 = math.sum(sum1, this.buffer_[iByte++]);
+        sum1 = math.sum(sum1, this.bufferDataView_.getUint8(iByte++) << 8);
+        sum1 = math.sum(sum1, this.bufferDataView_.getUint8(iByte++));
         sum2 = math.sum(sum1, sum2);
       } while (--tlen);
 
@@ -197,7 +197,7 @@ export class Lerc2Decoder {
 
     // add the straggler byte if it exists
     if (lercBlobLen & 1) {
-      sum1 = math.sum(sum1, math.leftShift(this.buffer_[iByte], 8));
+      sum1 = math.sum(sum1, math.leftShift(this.bufferDataView_.getUint8(iByte), 8));
       sum2 = math.sum(sum1, sum2);
     }
 
@@ -331,7 +331,7 @@ export class Lerc2Decoder {
    */
   readTile_(i0: number, i1: number, j0: number, j1: number): void {
     let ptr: number = this.fp_;
-    let compareFlag: number = this.buffer_[ptr];
+    let compareFlag: number = this.bufferDataView_.getUint8(ptr);
     ptr++;
     let numPixel: number = 0;
 
@@ -452,12 +452,12 @@ export class Lerc2Decoder {
   readVariableDataType_(ptr: number, dataTypeUsed: Lerc2DataType): { offset: number, ptr: number } {
     switch(dataTypeUsed) {
       case Lerc2DataType.CHAR: {
-        var c = this.buffer_[ptr];
+        var c = this.bufferDataView_.getInt8(ptr);
         ptr += 1;
         return {offset: c, ptr: ptr};
       }
       case Lerc2DataType.BYTE: {
-        var b = this.buffer_[ptr];
+        var b = this.bufferDataView_.getUint8(ptr);
         ptr += 1;
         return {offset: b, ptr: ptr};
       }

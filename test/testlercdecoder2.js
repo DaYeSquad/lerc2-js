@@ -34,7 +34,7 @@ describe("testLerc2IntValues()", function() {
     var testIntValues = obj["values"];
     var numNotEqual = 0;
     var dv = new DataView(result.pixelData);
-    for (var i = 0; i < result.pixelData.length; i++) {
+    for (var i = 0; i < result.pixelData.byteLength / 4; i++) {
       var value = dv.getInt32(i * 4, true);
       if (value != testIntValues[i]) {
         numNotEqual++;
@@ -54,7 +54,7 @@ describe("testLerc2ConstImageValues()", function() {
     var testIntValues = obj["values"];
     var numNotEqual = 0;
     var dv = new DataView(result.pixelData);
-    for (var i = 0; i < result.pixelData.length; i++) {
+    for (var i = 0; i < result.pixelData.byteLength / 4; i++) {
       var value = dv.getInt32(i * 4, true);
       if (value != testIntValues[i]) {
         numNotEqual++;
@@ -74,7 +74,7 @@ describe("testLerc2ConstImageValues()", function() {
     var testIntValues = obj["values"];
     var numNotEqual = 0;
     var dv = new DataView(result.pixelData);
-    for (var i = 0; i < result.pixelData.length; i++) {
+    for (var i = 0; i < result.pixelData.byteLength / 4; i++) {
       var value = dv.getInt32(i * 4, true);
       if (value != testIntValues[i]) {
         numNotEqual++;
@@ -94,7 +94,7 @@ describe("testLerc2ByteValues()", function() {
     var testIntValues = obj["values"];
     var numNotEqual = 0;
     var dv = new DataView(result.pixelData);
-    for (var i = 0; i < result.pixelData.length; i++) {
+    for (var i = 0; i < result.pixelData.byteLength; i++) {
       var value = dv.getUint8(i);
       if (value != testIntValues[i]) {
         numNotEqual++;

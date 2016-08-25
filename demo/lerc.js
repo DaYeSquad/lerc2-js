@@ -237,7 +237,7 @@ var Lerc2Decoder = (function () {
             }
             return { pixelData: this.pixelValuesDataView_.buffer };
         }
-        var readDataOneSweepFlag = this.buffer_[this.fp_]; // read flag
+        var readDataOneSweepFlag = this.bufferDataView_.getUint8(this.fp_); // read flag
         this.fp_++;
         if (readDataOneSweepFlag === 0) {
             this.readTiles_();
@@ -307,8 +307,8 @@ var Lerc2Decoder = (function () {
             var tlen = (words >= 359) ? 359 : words;
             words -= tlen;
             do {
-                sum1 = math.sum(sum1, this.buffer_[iByte++] << 8);
-                sum1 = math.sum(sum1, this.buffer_[iByte++]);
+                sum1 = math.sum(sum1, this.bufferDataView_.getUint8(iByte++) << 8);
+                sum1 = math.sum(sum1, this.bufferDataView_.getUint8(iByte++));
                 sum2 = math.sum(sum1, sum2);
             } while (--tlen);
             sum1 = math.sum(math.bitAnd(sum1, 0xffff), math.rightArithShift(sum1, 16));
@@ -316,7 +316,7 @@ var Lerc2Decoder = (function () {
         }
         // add the straggler byte if it exists
         if (lercBlobLen & 1) {
-            sum1 = math.sum(sum1, math.leftShift(this.buffer_[iByte], 8));
+            sum1 = math.sum(sum1, math.leftShift(this.bufferDataView_.getUint8(iByte), 8));
             sum2 = math.sum(sum1, sum2);
         }
         // second reduction step to reduce sums to 16 bits
@@ -425,7 +425,7 @@ var Lerc2Decoder = (function () {
      */
     Lerc2Decoder.prototype.readTile_ = function (i0, i1, j0, j1) {
         var ptr = this.fp_;
-        var compareFlag = this.buffer_[ptr];
+        var compareFlag = this.bufferDataView_.getUint8(ptr);
         ptr++;
         var numPixel = 0;
         var bits67 = compareFlag >> 6;
@@ -543,12 +543,12 @@ var Lerc2Decoder = (function () {
     Lerc2Decoder.prototype.readVariableDataType_ = function (ptr, dataTypeUsed) {
         switch (dataTypeUsed) {
             case Lerc2DataType.CHAR: {
-                var c = this.buffer_[ptr];
+                var c = this.bufferDataView_.getInt8(ptr);
                 ptr += 1;
                 return { offset: c, ptr: ptr };
             }
             case Lerc2DataType.BYTE: {
-                var b = this.buffer_[ptr];
+                var b = this.bufferDataView_.getUint8(ptr);
                 ptr += 1;
                 return { offset: b, ptr: ptr };
             }
@@ -703,10 +703,15 @@ var Lerc2Decoder = (function () {
 exports.Lerc2Decoder = Lerc2Decoder;
 
 },{"./bitstuff2":1,"mathjs":5}],3:[function(require,module,exports){
-var Lerc2Decoder = require('./lib/src/lercdecoder2.js');
+var Lerc2Decoder = require('./lib/src/lercdecoder2.js').Lerc2Decoder;
 
-module.exports = function drawImage() {
-  var canvas = document.getElementById('myCanvas');
+function drawImage() {
+  console.log(document);
+  var canvas = document.createElement('canvas');
+  canvas.setAttribute('id', 'myCanvas');
+  canvas.setAttribute('width', 256);
+  canvas.setAttribute('height', 256);
+  document.body.appendChild(canvas);
   var ctx = canvas.getContext('2d');
 
   var xmlhttp = new XMLHttpRequest();
@@ -714,39 +719,42 @@ module.exports = function drawImage() {
 
   xmlhttp.open("GET", url, true);
   xmlhttp.responseType = "arraybuffer";
-  xmlhttp.send();
 
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      var lercBuffer = xmlhttp.response;
-      var arrayBuffer = new Uint8Array(lercBuffer).buffer;
-      var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
-      var result = lerc2Decoder.parse();
-      var dv = new DataView(result.pixelData);
+      var arrayBuffer = xmlhttp.response;
+      if (arrayBuffer) {
+        var byteArray = new Uint8Array(arrayBuffer);
 
-      var imgd = new Uint8Array(result.pixelData.length);
-      for (var iByte = 0; iByte < result.pixelData.length; iByte++) {
-        imgd[iByte] = dv.getUint8(iByte);
+        var lerc2Decoder = new Lerc2Decoder(byteArray.buffer);
+        var result = lerc2Decoder.parse(false);
+        var dv = new DataView(result.pixelData);
+
+        var imgData = ctx.createImageData(256, 256); // width x height
+        var data = imgData.data;
+
+        var len = 256 * 256;
+
+        // copy img byte-per-byte into our ImageData
+        for (var i = 0; i < len; i++) {
+          data[i * 4] = dv.getUint8(i);
+          data[i * 4 + 1] = dv.getUint8(i);
+          data[i * 4 + 2] = dv.getUint8(i);
+          data[i * 4 + 3] = 255;
+        }
+
+        // now we can draw our imagedata onto the canvas
+        ctx.putImageData(imgData, 0, 0);
       }
-
-      var imgData = ctx.createImageData(256, 256); // width x height
-      var data = imgData.data;
-
-      var len = 256 * 256 * 4;
-
-      // copy img byte-per-byte into our ImageData
-      for (var i = 0; i < len; i++) {
-        data[i * 4] = imgd[i];
-        data[i * 4 + 1] = imgd[i];
-        data[i * 4 + 2] = imgd[i];
-        data[i * 4 + 3] = 255;
-      }
-
-      // now we can draw our imagedata onto the canvas
-      ctx.putImageData(imgData, 0, 0);
     }
   };
+
+  xmlhttp.send();
 }
+
+window.onload = function() {
+  drawImage();
+};
 
 },{"./lib/src/lercdecoder2.js":2}],4:[function(require,module,exports){
 module.exports = require('./lib/core/core');
