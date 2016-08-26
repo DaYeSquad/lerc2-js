@@ -54,6 +54,9 @@ export interface Lerc2HeaderInfo {
 }
 
 export interface Lerc2ParseResult {
+  width: number;
+  height: number;
+  dataType: Lerc2DataType;
   pixelData: ArrayBuffer;
 }
 
@@ -103,7 +106,8 @@ export class Lerc2Decoder {
           this.setPixelValuesByHeaderInfoDataType_(k, z0);
         }
       }
-      return { pixelData: this.pixelValuesDataView_.buffer };
+      return { width: this.headerInfo_.width, height: this.headerInfo_.height,
+        dataType: this.headerInfo_.lercDataType, pixelData: this.pixelValuesDataView_.buffer };
     }
 
     var readDataOneSweepFlag = this.bufferDataView_.getUint8(this.fp_); // read flag
@@ -115,7 +119,8 @@ export class Lerc2Decoder {
       this.readDataOneSweep_();
     }
 
-    return { pixelData: this.pixelValuesDataView_.buffer };
+    return { width: this.headerInfo_.width, height: this.headerInfo_.height,
+      dataType: this.headerInfo_.lercDataType, pixelData: this.pixelValuesDataView_.buffer };
   }
 
   /**

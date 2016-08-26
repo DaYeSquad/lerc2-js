@@ -45,26 +45,6 @@ describe("testLerc2IntValues()", function() {
 });
 
 describe("testLerc2ConstImageValues()", function() {
-  it("pixel values should equal to values in data/test_int.json", function() {
-    var lercData = fs.readFileSync("data/test_const_image.lerc");
-    var arrayBuffer = new Uint8Array(lercData).buffer;
-    var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
-    var result = lerc2Decoder.parse();
-    var obj = JSON.parse(fs.readFileSync("data/test_const_image.json"));
-    var testIntValues = obj["values"];
-    var numNotEqual = 0;
-    var dv = new DataView(result.pixelData);
-    for (var i = 0; i < result.pixelData.byteLength / 4; i++) {
-      var value = dv.getInt32(i * 4, true);
-      if (value != testIntValues[i]) {
-        numNotEqual++;
-      }
-    }
-    expect(numNotEqual).to.equal(0);
-  });
-});
-
-describe("testLerc2ConstImageValues()", function() {
   it("pixel values should equal to values in data/test_float.json", function() {
     var lercData = fs.readFileSync("data/test_float.lerc");
     var arrayBuffer = new Uint8Array(lercData).buffer;
