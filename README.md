@@ -6,11 +6,11 @@ LERC is an open-source image or raster format which supports rapid encoding and 
 
 ## Why this project?
 
-The original project just provides Lerc2 encoder and Lerc1 decoder(js), so I migrate its C++ implementation(part of) to javascript.
+The original project just provides Lerc2 encoder and Lerc1 decoder(js), so I migrate its C++ implementation(part of) to TypeScript.
 
 ## How to use
 
-Copy *.js files from lib/dist or lib/src folder.
+Copy *.js files from lib/src folder to use on backend or use browserify to build a bundle on front end, the demo in demo folder shows an example of using command `browserify main.js > lerc.js` to build a bundle js and use it in canvas.
 
 ```Javascript
     var Lerc2Decoder = require('../lib/src/lercdecoder2').Lerc2Decoder;

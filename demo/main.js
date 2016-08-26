@@ -1,4 +1,4 @@
-var Lerc2Decoder = require('./lib/src/lercdecoder2.js').Lerc2Decoder;
+var Lerc2Decoder = require('../lib/src/lercdecoder2.js').Lerc2Decoder;
 
 function drawImage() {
   var canvas = document.createElement('canvas');
