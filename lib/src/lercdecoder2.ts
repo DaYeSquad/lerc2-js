@@ -56,6 +56,8 @@ export interface Lerc2HeaderInfo {
 export interface Lerc2ParseResult {
   width: number;
   height: number;
+  zMin: number;
+  zMax: number;
   dataType: Lerc2DataType;
   pixelData: ArrayBuffer;
 }
@@ -107,6 +109,7 @@ export class Lerc2Decoder {
         }
       }
       return { width: this.headerInfo_.width, height: this.headerInfo_.height,
+        zMin: this.headerInfo_.zMin, zMax: this.headerInfo_.zMax,
         dataType: this.headerInfo_.lercDataType, pixelData: this.pixelValuesDataView_.buffer };
     }
 
@@ -120,6 +123,7 @@ export class Lerc2Decoder {
     }
 
     return { width: this.headerInfo_.width, height: this.headerInfo_.height,
+      zMin: this.headerInfo_.zMin, zMax: this.headerInfo_.zMax,
       dataType: this.headerInfo_.lercDataType, pixelData: this.pixelValuesDataView_.buffer };
   }
 
