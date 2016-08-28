@@ -10,7 +10,9 @@ The original project just provides Lerc2 encoder and Lerc1 decoder(js), so I mig
 
 ## How to use
 
-Copy *.js files from lib/src folder to use on backend or use browserify to build a bundle on front end, the demo in demo folder shows an example of using command `browserify main.js > lerc.js` to build a bundle js and use it in canvas.
+Run 'npm install' to install dependencies and 'gulp' to build them all.
+On back end, the script is below:
+On front end, the demo in demo folder shows an example which uses Canvas to display the result.
 
 ```Javascript
     var Lerc2Decoder = require('../lib/src/lercdecoder2').Lerc2Decoder;
@@ -26,3 +28,7 @@ Copy *.js files from lib/src folder to use on backend or use browserify to build
 ## Test
 
 Run mocha to test.
+
+## Runtime
+
+Node v6.4.0

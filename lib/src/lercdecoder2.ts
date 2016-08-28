@@ -242,8 +242,9 @@ export class Lerc2Decoder {
       var tlen = (words >= 359) ? 359 : words;
       words -= tlen;
       do {
-        sum1 += (this.buffer_[iByte++] << 8);
-        sum2 += sum1 += this.buffer_[iByte++];
+
+        sum1 += (this.bufferDataView_.getUint8(iByte++) << 8);
+        sum2 += sum1 += this.bufferDataView_.getUint8(iByte++);
       } while (--tlen);
 
       sum1 = (sum1 & 0xffff) + (sum1 >> 16);
@@ -252,7 +253,7 @@ export class Lerc2Decoder {
 
     // add the straggler byte if it exists
     if (lercBlobLen & 1) {
-      sum2 += sum1 += (this.buffer_[iByte] << 8);
+      sum2 += sum1 += (this.bufferDataView_.getUint8(iByte) << 8);
     }
 
     // second reduction step to reduce sums to 16 bits

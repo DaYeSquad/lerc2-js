@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 var expect = require("chai").expect;
-var Lerc2Decoder = require('../lib/src/lercdecoder2').Lerc2Decoder;
+var Lerc2Decoder = require('../lib/dist/lercdecoder2').Lerc2Decoder;
 var fs = require("fs");
 
 describe("testLerc2IntValues()", function() {
