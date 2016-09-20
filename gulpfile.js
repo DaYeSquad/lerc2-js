@@ -38,11 +38,18 @@ gulp.task('ts', function() {
 });
 
 // Use Browserify to bundle js for front end usage.
-gulp.task('js', ['ts'], function() {
-  gulp.src(['demo/main.js'])
+gulp.task('js-bytes', ['ts'], function() {
+  gulp.src(['demo/lerc_bytes/main.js'])
     .pipe(browserify())
     .pipe(rename('lerc.js'))
-    .pipe(gulp.dest('demo/'));
+    .pipe(gulp.dest('demo/lerc_bytes/'));
 });
 
-gulp.task('default', ['js']);
+gulp.task('js-short', ['ts'], function() {
+  gulp.src(['demo/lerc_short/main.js'])
+    .pipe(browserify())
+    .pipe(rename('lerc.js'))
+    .pipe(gulp.dest('demo/lerc_short/'));
+});
+
+gulp.task('default', ['js-bytes', 'js-short']);

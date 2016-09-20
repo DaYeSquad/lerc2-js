@@ -374,6 +374,12 @@ export class Lerc2Decoder {
           } else if (this.headerInfo_.lercDataType === Lerc2DataType.INT) {
             this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true));
             srcPtr += 4;
+          } else if (this.headerInfo_.lercDataType === Lerc2DataType.USHORT) {
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint16(srcPtr, true));
+            srcPtr += 2;
+          } else if (this.headerInfo_.lercDataType === Lerc2DataType.SHORT) {
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt16(srcPtr, true));
+            srcPtr += 2;
           } else {
             throw "Lerc2DataType rather than FLOAT, INT is not supported yet";
           }
@@ -529,6 +535,27 @@ export class Lerc2Decoder {
             cntPixel++;
             break;
           }
+          case Lerc2DataType.UINT: {
+            sizeofType = 4;
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint32(srcPtr, true));
+            srcPtr += 4;
+            cntPixel++;
+            break;
+          }
+          case Lerc2DataType.USHORT: {
+            sizeofType = 2;
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint16(srcPtr, true));
+            srcPtr += 2;
+            cntPixel++;
+            break;
+          }
+          case Lerc2DataType.SHORT: {
+            sizeofType = 2;
+            this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt16(srcPtr, true));
+            srcPtr += 2;
+            cntPixel++;
+            break;
+          }
           case Lerc2DataType.FLOAT: {
             sizeofType = 4;
             this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getFloat32(srcPtr, true));
@@ -559,6 +586,18 @@ export class Lerc2Decoder {
       }
       case Lerc2DataType.INT: {
         this.pixelValuesDataView_.setInt32(position * 4, parseInt(<any>(value)), true);
+        break;
+      }
+      case Lerc2DataType.UINT: {
+        this.pixelValuesDataView_.setUint32(position * 4, parseInt(<any>(value)), true);
+        break;
+      }
+      case Lerc2DataType.USHORT: {
+        this.pixelValuesDataView_.setUint16(position * 2, parseInt(<any>(value)), true);
+        break;
+      }
+      case Lerc2DataType.SHORT: {
+        this.pixelValuesDataView_.setInt16(position * 2, parseInt(<any>(value)), true);
         break;
       }
       case Lerc2DataType.BYTE: {

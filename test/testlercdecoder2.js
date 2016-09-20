@@ -40,7 +40,7 @@ describe("testLerc2IntValues()", function() {
         numNotEqual++;
       }
     }
-    expect(numNotEqual).to.equal(0);
+    expect(0).to.equal(numNotEqual);
   });
 });
 
@@ -60,7 +60,7 @@ describe("testLerc2ConstImageValues()", function() {
         numNotEqual++;
       }
     }
-    expect(numNotEqual).to.equal(0);
+    expect(0).to.equal(numNotEqual);
   });
 });
 
@@ -80,6 +80,26 @@ describe("testLerc2ByteValues()", function() {
         numNotEqual++;
       }
     }
-    expect(numNotEqual).to.equal(0);
+    expect(0).to.equal(numNotEqual);
+  });
+});
+
+describe("testLerc2ShortValues()", function() {
+  it("pixel values should equal to values in data/test_short.json", function() {
+    var lercData = fs.readFileSync("data/test_short.lerc");
+    var arrayBuffer = new Uint8Array(lercData).buffer;
+    var lerc2Decoder = new Lerc2Decoder(arrayBuffer);
+    var result = lerc2Decoder.parse();
+    var obj = JSON.parse(fs.readFileSync("data/test_short.json"));
+    var testIntValues = obj["values"];
+    var numNotEqual = 0;
+    var dv = new DataView(result.pixelData);
+    for (var i = 0; i < result.pixelData.byteLength / 2; i++) {
+      var value = dv.getInt16(i * 2, true);
+      if (value != testIntValues[i]) {
+        numNotEqual++;
+      }
+    }
+    expect(0).to.equal(numNotEqual);
   });
 });

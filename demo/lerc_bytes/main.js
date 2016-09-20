@@ -1,4 +1,4 @@
-var Lerc2Decoder = require('../lib/dist/lercdecoder2.js').Lerc2Decoder;
+var Lerc2Decoder = require('../../lib/dist/lercdecoder2.js').Lerc2Decoder;
 
 function drawImage() {
   var canvas = document.createElement('canvas');
@@ -9,7 +9,7 @@ function drawImage() {
   var ctx = canvas.getContext('2d');
 
   var xmlhttp = new XMLHttpRequest();
-  var url = "http://127.0.0.1:8080/data/test_bytes.lerc";
+  var url = "http://127.0.0.1:8080/lerc_bytes/data/test_bytes.lerc";
 
   xmlhttp.open("GET", url, true);
   xmlhttp.responseType = "arraybuffer";

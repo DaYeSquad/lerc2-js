@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Lerc2Decoder = require('../lib/dist/lercdecoder2.js').Lerc2Decoder;
+var Lerc2Decoder = require('../../lib/dist/lercdecoder2.js').Lerc2Decoder;
 
 function drawImage() {
   var canvas = document.createElement('canvas');
@@ -10,7 +10,7 @@ function drawImage() {
   var ctx = canvas.getContext('2d');
 
   var xmlhttp = new XMLHttpRequest();
-  var url = "http://127.0.0.1:8080/data/test_bytes.lerc";
+  var url = "http://127.0.0.1:8080/lerc_bytes/data/test_bytes.lerc";
 
   xmlhttp.open("GET", url, true);
   xmlhttp.responseType = "arraybuffer";
@@ -51,7 +51,7 @@ window.onload = function() {
   drawImage();
 };
 
-},{"../lib/dist/lercdecoder2.js":3}],2:[function(require,module,exports){
+},{"../../lib/dist/lercdecoder2.js":3}],2:[function(require,module,exports){
 "use strict";
 var BitStuff2 = (function () {
     function BitStuff2(buffer) {
@@ -408,6 +408,14 @@ var Lerc2Decoder = (function () {
                         this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt32(srcPtr, true));
                         srcPtr += 4;
                     }
+                    else if (this.headerInfo_.lercDataType === Lerc2DataType.USHORT) {
+                        this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint16(srcPtr, true));
+                        srcPtr += 2;
+                    }
+                    else if (this.headerInfo_.lercDataType === Lerc2DataType.SHORT) {
+                        this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt16(srcPtr, true));
+                        srcPtr += 2;
+                    }
                     else {
                         throw "Lerc2DataType rather than FLOAT, INT is not supported yet";
                     }
@@ -542,6 +550,27 @@ var Lerc2Decoder = (function () {
                         cntPixel++;
                         break;
                     }
+                    case Lerc2DataType.UINT: {
+                        sizeofType = 4;
+                        this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint32(srcPtr, true));
+                        srcPtr += 4;
+                        cntPixel++;
+                        break;
+                    }
+                    case Lerc2DataType.USHORT: {
+                        sizeofType = 2;
+                        this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getUint16(srcPtr, true));
+                        srcPtr += 2;
+                        cntPixel++;
+                        break;
+                    }
+                    case Lerc2DataType.SHORT: {
+                        sizeofType = 2;
+                        this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getInt16(srcPtr, true));
+                        srcPtr += 2;
+                        cntPixel++;
+                        break;
+                    }
                     case Lerc2DataType.FLOAT: {
                         sizeofType = 4;
                         this.setPixelValuesByHeaderInfoDataType_(k, this.bufferDataView_.getFloat32(srcPtr, true));
@@ -564,6 +593,18 @@ var Lerc2Decoder = (function () {
             }
             case Lerc2DataType.INT: {
                 this.pixelValuesDataView_.setInt32(position * 4, parseInt((value)), true);
+                break;
+            }
+            case Lerc2DataType.UINT: {
+                this.pixelValuesDataView_.setUint32(position * 4, parseInt((value)), true);
+                break;
+            }
+            case Lerc2DataType.USHORT: {
+                this.pixelValuesDataView_.setUint16(position * 2, parseInt((value)), true);
+                break;
+            }
+            case Lerc2DataType.SHORT: {
+                this.pixelValuesDataView_.setInt16(position * 2, parseInt((value)), true);
                 break;
             }
             case Lerc2DataType.BYTE: {
@@ -53074,5 +53115,5 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,require("pBGvAp"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":502,"inherits":4,"pBGvAp":501}]},{},[1])
+}).call(this,require("rH1JPG"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":502,"inherits":4,"rH1JPG":501}]},{},[1])
